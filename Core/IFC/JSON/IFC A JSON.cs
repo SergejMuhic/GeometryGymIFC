@@ -75,7 +75,7 @@ namespace GeometryGym.Ifc
 				obj["PredefinedType"] = mPredefinedType.ToString();
 		}
 	}
-	public partial class IfcAlignment2DCant : IfcAxisLateralInclination
+	public partial class IfcAlignmentCant : IfcLinearElement
 	{
 		protected override void setJSON(JObject obj, BaseClassIfc host, SetJsonOptions options)
 		{
@@ -86,13 +86,13 @@ namespace GeometryGym.Ifc
 		internal override void parseJObject(JObject obj)
 		{
 			base.parseJObject(obj);
-			Segments.AddRange(mDatabase.extractJArray<IfcAlignment2DCantSegment>(obj.GetValue("Segments", StringComparison.InvariantCultureIgnoreCase) as JArray));
+			Segments.AddRange(mDatabase.extractJArray<IfcAlignmentCantSegment>(obj.GetValue("Segments", StringComparison.InvariantCultureIgnoreCase) as JArray));
 			JToken railHeadDistance = obj.GetValue("RailHeadDistance", StringComparison.InvariantCultureIgnoreCase);
 			if (railHeadDistance != null)
 				mRailHeadDistance = railHeadDistance.Value<double>();
 		}
 	}
-	public abstract partial class IfcAlignment2DCantSegment : IfcAlignment2DSegment
+	public abstract partial class IfcAlignmentCantSegment : IfcAlignmentSegment
 	{
 		protected override void setJSON(JObject obj, BaseClassIfc host, SetJsonOptions options)
 		{
@@ -129,7 +129,7 @@ namespace GeometryGym.Ifc
 				mEndCantRight = endCantRight.Value<double>();
 		}
 	}
-	public partial class IfcAlignment2DCantSegTransition : IfcAlignment2DCantSegment
+	public partial class IfcAlignment2DCantSegTransition : IfcAlignmentCantSegment
 	{
 		protected override void setJSON(JObject obj, BaseClassIfc host, SetJsonOptions options)
 		{
@@ -195,7 +195,7 @@ namespace GeometryGym.Ifc
 				Enum.TryParse<IfcTransitionCurveType>(token.Value<string>(), true, out mTransitionCurveType);
 		}
 	}
-	public partial class IfcAlignment2DHorizontal : IfcGeometricRepresentationItem //IFC4.1
+	public partial class IfcAlignmentHorizontal : IfcGeometricRepresentationItem //IFC4.1
 	{
 		internal override void parseJObject(JObject obj)
 		{
@@ -203,7 +203,7 @@ namespace GeometryGym.Ifc
 			JToken token = obj.GetValue("StartDistAlong", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
 				StartDistAlong = token.Value<double>();
-			Segments.AddRange(mDatabase.extractJArray<IfcAlignment2DHorizontalSegment>(obj.GetValue("Segments", StringComparison.InvariantCultureIgnoreCase) as JArray));
+			Segments.AddRange(mDatabase.extractJArray<IfcAlignmentHorizontalSegment>(obj.GetValue("Segments", StringComparison.InvariantCultureIgnoreCase) as JArray));
 		}
 		protected override void setJSON(JObject obj, BaseClassIfc host, SetJsonOptions options)
 		{
@@ -213,7 +213,7 @@ namespace GeometryGym.Ifc
 			obj["Segments"] = new JArray(Segments.ConvertAll(x => x.getJson(this, options)));
 		}
 	}
-	public partial class IfcAlignment2DHorizontalSegment : IfcAlignment2DSegment //IFC4.1
+	public partial class IfcAlignmentHorizontalSegment : IfcAlignmentSegment //IFC4.1
 	{
 		internal override void parseJObject(JObject obj)
 		{
@@ -228,7 +228,7 @@ namespace GeometryGym.Ifc
 			obj["CurveGeometry"] = CurveGeometry.getJson(this, options);
 		}
 	}
-	public abstract partial class IfcAlignment2DSegment : IfcGeometricRepresentationItem //IFC4.1
+	public abstract partial class IfcAlignmentSegment : IfcGeometricRepresentationItem //IFC4.1
 	{
 		internal override void parseJObject(JObject obj)
 		{
@@ -281,7 +281,7 @@ namespace GeometryGym.Ifc
 			obj["Segments"] = array;
 		}
 	}
-	public abstract partial class IfcAlignment2DVerticalSegment : IfcAlignment2DSegment //IFC4.1
+	public abstract partial class IfcAlignment2DVerticalSegment : IfcAlignmentSegment //IFC4.1
 	{
 		protected override void setJSON(JObject obj, BaseClassIfc host, SetJsonOptions options)
 		{
@@ -299,7 +299,7 @@ namespace GeometryGym.Ifc
 			base.parseJObject(obj);
 			JToken token = obj.GetValue("Horizontal", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Horizontal = mDatabase.ParseJObject<IfcAlignment2DHorizontal>(token as JObject);
+				Horizontal = mDatabase.ParseJObject<IfcAlignmentHorizontal>(token as JObject);
 			token = obj.GetValue("Vertical", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
 				Vertical = mDatabase.ParseJObject<IfcAlignment2DVertical>(token as JObject);

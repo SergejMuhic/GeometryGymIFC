@@ -257,27 +257,28 @@ namespace GeometryGym.Ifc
 		public IfcAlignment(IfcSite host, IfcCurve axis) : base(host, axis) { }
 	}
 	[Serializable]
-	public partial class IfcAlignment2DCant : IfcAxisLateralInclination
+	public partial class IfcAlignmentCant : IfcLinearElement
 	{
-		private LIST<IfcAlignment2DCantSegment> mSegments = new LIST<IfcAlignment2DCantSegment>(); //: LIST[1:?] OF IfcAlignment2DCantSegment;
+		private LIST<IfcAlignmentCantSegment> mSegments = new LIST<IfcAlignmentCantSegment>(); //: LIST[1:?] OF IfcAlignment2DCantSegment;
 		private double mRailHeadDistance = 0; //: IfcPositiveLengthMeasure;
 
-		public LIST<IfcAlignment2DCantSegment> Segments { get { return mSegments; } set { mSegments = value; } }
+		public LIST<IfcAlignmentCantSegment> Segments { get { return mSegments; } set { mSegments = value; } }
 		public double RailHeadDistance { get { return mRailHeadDistance; } set { mRailHeadDistance = value; } }
 
-		public IfcAlignment2DCant() : base() { }
-		internal IfcAlignment2DCant(DatabaseIfc db, IfcAlignment2DCant alignment2dCant, DuplicateOptions options) : base(db, alignment2dCant, options)
+		public IfcAlignmentCant() : base() { }
+		internal IfcAlignmentCant(DatabaseIfc db, IfcAlignmentCant alignmentCant, DuplicateOptions options) : base(db, alignmentCant, options)
 		{
-			Segments.AddRange(alignment2dCant.Segments.Select(x => db.Factory.Duplicate(x) as IfcAlignment2DCantSegment));
-			RailHeadDistance = alignment2dCant.RailHeadDistance;
+			Segments.AddRange(alignmentCant.Segments.Select(x => db.Factory.Duplicate(x) as IfcAlignmentCantSegment));
+			RailHeadDistance = alignmentCant.RailHeadDistance;
 		}
-		public IfcAlignment2DCant(DatabaseIfc db, IEnumerable<IfcAlignment2DCantSegment> segments, double railHeadDistance)
+		public IfcAlignmentCant(DatabaseIfc db, IEnumerable<IfcAlignmentCantSegment> segments, double railHeadDistance)
 			: base(db)
 		{
 			Segments.AddRange(segments);
 			RailHeadDistance = railHeadDistance;
 		}
 	}
+	/*
 	[Serializable]
 	public partial class IfcAlignment2DCantSegLine : IfcAlignment2DCantSegment
 	{
@@ -285,9 +286,9 @@ namespace GeometryGym.Ifc
 		internal IfcAlignment2DCantSegLine(DatabaseIfc db, IfcAlignment2DCantSegLine alignment2DCantSegLine, DuplicateOptions options) : base(db, alignment2DCantSegLine, options) { }
 		public IfcAlignment2DCantSegLine(DatabaseIfc db, double startDistAlong, double horizontalLength, double startCantLeft, double startCantRight)
 			: base(db, startDistAlong, horizontalLength, startCantLeft, startCantRight) { }
-	}
+	}*/
 	[Serializable]
-	public abstract partial class IfcAlignment2DCantSegment : IfcAlignment2DSegment
+	public abstract partial class IfcAlignmentCantSegment : IfcAlignmentSegment
 	{
 		private double mStartDistAlong = 0; //: IfcPositiveLengthMeasure;
 		private double mHorizontalLength = 0; //: IfcPositiveLengthMeasure;
@@ -296,7 +297,7 @@ namespace GeometryGym.Ifc
 		private double mStartCantRight = 0; //: IfcLengthMeasure;
 		private double mEndCantRight = double.NaN; //: OPTIONAL IfcLengthMeasure;
 												   //INVERSE
-		private SET<IfcAlignment2DCant> mToCant = new SET<IfcAlignment2DCant>();
+		private SET<IfcAlignmentCant> mToCant = new SET<IfcAlignmentCant>();
 
 		public double StartDistAlong { get { return mStartDistAlong; } set { mStartDistAlong = value; } }
 		public double HorizontalLength { get { return mHorizontalLength; } set { mHorizontalLength = value; } }
@@ -305,10 +306,10 @@ namespace GeometryGym.Ifc
 		public double StartCantRight { get { return mStartCantRight; } set { mStartCantRight = value; } }
 		public double EndCantRight { get { return mEndCantRight; } set { mEndCantRight = value; } }
 		//INVERSE
-		public SET<IfcAlignment2DCant> ToCant { get { return mToCant; } set { mToCant = value; } }
+		public SET<IfcAlignmentCant> ToCant { get { return mToCant; } set { mToCant = value; } }
 
-		protected IfcAlignment2DCantSegment() : base() { }
-		protected IfcAlignment2DCantSegment(DatabaseIfc db, IfcAlignment2DCantSegment alignment2DCantSegment, DuplicateOptions options) : base(db, alignment2DCantSegment, options)
+		protected IfcAlignmentCantSegment() : base() { }
+		protected IfcAlignmentCantSegment(DatabaseIfc db, IfcAlignmentCantSegment alignment2DCantSegment, DuplicateOptions options) : base(db, alignment2DCantSegment, options)
 		{
 			StartDistAlong = alignment2DCantSegment.StartDistAlong;
 			HorizontalLength = alignment2DCantSegment.HorizontalLength;
@@ -317,7 +318,7 @@ namespace GeometryGym.Ifc
 			StartCantLeft = alignment2DCantSegment.StartCantLeft;
 			EndCantRight = alignment2DCantSegment.EndCantRight;
 		}
-		protected IfcAlignment2DCantSegment(DatabaseIfc db, double startDistAlong, double horizontalLength, double startCantLeft, double startCantRight)
+		protected IfcAlignmentCantSegment(DatabaseIfc db, double startDistAlong, double horizontalLength, double startCantLeft, double startCantRight)
 			: base(db)
 		{
 			StartDistAlong = startDistAlong;
@@ -327,7 +328,7 @@ namespace GeometryGym.Ifc
 		}
 	}
 	[Serializable]
-	public partial class IfcAlignment2DCantSegTransition : IfcAlignment2DCantSegment
+	public partial class IfcAlignment2DCantSegTransition : IfcAlignmentCantSegment
 	{
 		private double mStartRadius = double.NaN; //: OPTIONAL IfcPositiveLengthMeasure;
 		private double mEndRadius = double.NaN; //: OPTIONAL IfcPositiveLengthMeasure;
@@ -391,24 +392,24 @@ namespace GeometryGym.Ifc
 		}
 	}
 	[Serializable]
-	public partial class IfcAlignment2DHorizontal : IfcGeometricRepresentationItem //IFC4.1
+	public partial class IfcAlignmentHorizontal : IfcGeometricRepresentationItem //IFC4.1
 	{
 		internal double mStartDistAlong = double.NaN;// : OPTIONAL IfcLengthMeasure;
-		internal LIST<IfcAlignment2DHorizontalSegment> mSegments = new LIST<IfcAlignment2DHorizontalSegment>();// : LIST [1:?] OF IfcAlignment2DHorizontalSegment;
+		internal LIST<IfcAlignmentHorizontalSegment> mSegments = new LIST<IfcAlignmentHorizontalSegment>();// : LIST [1:?] OF IfcAlignment2DHorizontalSegment;
 	   //INVERSE
 		internal SET<IfcAlignmentCurve> mToAlignmentCurve = new SET<IfcAlignmentCurve>();// : SET[1:?] OF IfcAlignmentCurve FOR Horizontal;
 
 		public double StartDistAlong { get { return double.IsNaN(mStartDistAlong) ? 0 : mStartDistAlong; } set { mStartDistAlong = value; } }
-		public LIST<IfcAlignment2DHorizontalSegment> Segments { get { return mSegments; } set { mSegments = value; } }
+		public LIST<IfcAlignmentHorizontalSegment> Segments { get { return mSegments; } set { mSegments = value; } }
 		public SET<IfcAlignmentCurve> ToAlignmentCurve { get { return mToAlignmentCurve; } set { mToAlignmentCurve = value;  } } 
 
-		internal IfcAlignment2DHorizontal() : base() { }
-		internal IfcAlignment2DHorizontal(DatabaseIfc db, IfcAlignment2DHorizontal a, DuplicateOptions options) : base(db, a, options)
+		internal IfcAlignmentHorizontal() : base() { }
+		internal IfcAlignmentHorizontal(DatabaseIfc db, IfcAlignmentHorizontal a, DuplicateOptions options) : base(db, a, options)
 		{
 			mStartDistAlong = a.mStartDistAlong;
-			Segments.AddRange(a.Segments.ConvertAll(x => db.Factory.Duplicate(x) as IfcAlignment2DHorizontalSegment));
+			Segments.AddRange(a.Segments.ConvertAll(x => db.Factory.Duplicate(x) as IfcAlignmentHorizontalSegment));
 		}
-		public IfcAlignment2DHorizontal(IEnumerable<IfcAlignment2DHorizontalSegment> segments) : base(segments.First().Database) { mSegments.AddRange(segments); }
+		public IfcAlignmentHorizontal(IEnumerable<IfcAlignmentHorizontalSegment> segments) : base(segments.First().Database) { mSegments.AddRange(segments); }
 		protected override void initialize()
 		{
 			base.initialize();
@@ -420,32 +421,32 @@ namespace GeometryGym.Ifc
 				return;
 			if (e.NewItems != null)
 			{
-				foreach (IfcAlignment2DHorizontalSegment segment in e.NewItems)
+				foreach (IfcAlignmentHorizontalSegment segment in e.NewItems)
 					segment.ToHorizontal = this;
 			}
 			if (e.OldItems != null)
 			{
-				foreach (IfcAlignment2DHorizontalSegment segment in e.OldItems)
+				foreach (IfcAlignmentHorizontalSegment segment in e.OldItems)
 					segment.ToHorizontal = null;
 			}
 		}
 	}
 	[Serializable]
-	public partial class IfcAlignment2DHorizontalSegment : IfcAlignment2DSegment //IFC4.1
+	public partial class IfcAlignmentHorizontalSegment : IfcAlignmentSegment //IFC4.1
 	{
 		private IfcCurveSegment2D mCurveGeometry;// : IfcCurveSegment2D;
 		//INVERSE
-		internal IfcAlignment2DHorizontal mToHorizontal = null;
+		internal IfcAlignmentHorizontal mToHorizontal = null;
 
 		public IfcCurveSegment2D CurveGeometry { get { return mCurveGeometry; } set { if (mCurveGeometry != null) mCurveGeometry.mToSegment = null; mCurveGeometry = value; if (value != null) mCurveGeometry.mToSegment = this; } }
-		public IfcAlignment2DHorizontal ToHorizontal { get { return mToHorizontal; } set { mToHorizontal = value; } }
+		public IfcAlignmentHorizontal ToHorizontal { get { return mToHorizontal; } set { mToHorizontal = value; } }
 
-		internal IfcAlignment2DHorizontalSegment() : base() { }
-		internal IfcAlignment2DHorizontalSegment(DatabaseIfc db, IfcAlignment2DHorizontalSegment s, DuplicateOptions options) : base(db, s, options) { CurveGeometry = db.Factory.Duplicate(s.CurveGeometry) as IfcCurveSegment2D; }
-		public IfcAlignment2DHorizontalSegment(IfcCurveSegment2D seg) : base(seg.mDatabase) { CurveGeometry = seg; }
+		internal IfcAlignmentHorizontalSegment() : base() { }
+		internal IfcAlignmentHorizontalSegment(DatabaseIfc db, IfcAlignmentHorizontalSegment s, DuplicateOptions options) : base(db, s, options) { CurveGeometry = db.Factory.Duplicate(s.CurveGeometry) as IfcCurveSegment2D; }
+		public IfcAlignmentHorizontalSegment(IfcCurveSegment2D seg) : base(seg.mDatabase) { CurveGeometry = seg; }
 	}
 	[Serializable]
-	public abstract partial class IfcAlignment2DSegment : IfcGeometricRepresentationItem //IFC4.1 ABSTRACT SUPERTYPE OF(ONEOF(IfcAlignment2DHorizontalSegment, IfcAlignment2DVerticalSegment))
+	public abstract partial class IfcAlignmentSegment : IfcGeometricRepresentationItem //IFC4.1 ABSTRACT SUPERTYPE OF(ONEOF(IfcAlignment2DHorizontalSegment, IfcAlignment2DVerticalSegment))
 	{
 		internal IfcLogicalEnum mTangentialContinuity = IfcLogicalEnum.UNKNOWN;// : OPTIONAL IfcBoolean;
 		private string mStartTag = "$";// : OPTIONAL IfcLabel;
@@ -455,9 +456,9 @@ namespace GeometryGym.Ifc
 		public string StartTag { get { return (mStartTag == "$" ? "" : ParserIfc.Decode(mStartTag)); } set { mStartTag = (string.IsNullOrEmpty(value) ? "$" : ParserIfc.Encode(value.Replace("'", ""))); } }
 		public string EndTag { get { return (mEndTag == "$" ? "" : ParserIfc.Decode(mEndTag)); } set { mEndTag = (string.IsNullOrEmpty(value) ? "$" : ParserIfc.Encode(value.Replace("'", ""))); } }
 
-		protected IfcAlignment2DSegment() : base() { }
-		protected IfcAlignment2DSegment(DatabaseIfc db) : base(db) { }
-		protected IfcAlignment2DSegment(DatabaseIfc db, IfcAlignment2DSegment s, DuplicateOptions options) : base(db, s, options)
+		protected IfcAlignmentSegment() : base() { }
+		protected IfcAlignmentSegment(DatabaseIfc db) : base(db) { }
+		protected IfcAlignmentSegment(DatabaseIfc db, IfcAlignmentSegment s, DuplicateOptions options) : base(db, s, options)
 		{
 			TangentialContinuity = s.TangentialContinuity;
 			StartTag = s.StartTag;
@@ -533,7 +534,7 @@ namespace GeometryGym.Ifc
 		public IfcAlignment2DVertical(IEnumerable<IfcAlignment2DVerticalSegment> segments) : base(segments.First().Database) { Segments.AddRange(segments); }
 	}
 	[Serializable]
-	public abstract partial class IfcAlignment2DVerticalSegment : IfcAlignment2DSegment //IFC4.1
+	public abstract partial class IfcAlignment2DVerticalSegment : IfcAlignmentSegment //IFC4.1
 	{
 		internal double mStartDistAlong;// : IfcLengthMeasure;
 		internal double mHorizontalLength;// : IfcPositiveLengthMeasure;
@@ -564,11 +565,11 @@ namespace GeometryGym.Ifc
 	[Serializable]
 	public partial class IfcAlignmentCurve : IfcBoundedCurve //IFC4.1
 	{
-		internal IfcAlignment2DHorizontal mHorizontal = null;// : OPTIONAL IfcAlignment2DHorizontal;
+		internal IfcAlignmentHorizontal mHorizontal = null;// : OPTIONAL IfcAlignment2DHorizontal;
 		private IfcAlignment2DVertical mVertical = null;// : OPTIONAL IfcAlignment2DVertical;
 		internal string mTag = "$";// : OPTIONAL IfcLabel;
 
-		public IfcAlignment2DHorizontal Horizontal { get { return mHorizontal; } set { mHorizontal = value; } }
+		public IfcAlignmentHorizontal Horizontal { get { return mHorizontal; } set { mHorizontal = value; } }
 		public IfcAlignment2DVertical Vertical { get { return mVertical; } set { if (mVertical != null) mVertical.ToAlignmentCurve = null; mVertical = value; if (value != null) value.ToAlignmentCurve = this; } }
 		public string Tag { get { return (mTag == "$" ? "" : ParserIfc.Decode(mTag)); } set { mTag = (string.IsNullOrEmpty(value) ? "$" : ParserIfc.Encode(value)); } }
 
@@ -576,15 +577,15 @@ namespace GeometryGym.Ifc
 		internal IfcAlignmentCurve(DatabaseIfc db, IfcAlignmentCurve c, DuplicateOptions options) : base(db, c, options)
 		{
 			if (c.mHorizontal != null)
-				Horizontal = db.Factory.Duplicate(c.Horizontal) as IfcAlignment2DHorizontal;
+				Horizontal = db.Factory.Duplicate(c.Horizontal) as IfcAlignmentHorizontal;
 			if (c.mVertical != null)
 				Vertical = db.Factory.Duplicate(c.Vertical) as IfcAlignment2DVertical;
 			Tag = c.Tag;
 		}
 		public IfcAlignmentCurve(DatabaseIfc db) : base(db) { }
-		public IfcAlignmentCurve(IfcAlignment2DHorizontal horizontal) : base(horizontal.Database) { Horizontal = horizontal; }
+		public IfcAlignmentCurve(IfcAlignmentHorizontal horizontal) : base(horizontal.Database) { Horizontal = horizontal; }
 		public IfcAlignmentCurve(IfcAlignment2DVertical vertical) : base(vertical.Database) { Vertical = vertical; }
-		public IfcAlignmentCurve(IfcAlignment2DHorizontal horizontal, IfcAlignment2DVertical vertical) : this(horizontal) { Vertical = vertical; }
+		public IfcAlignmentCurve(IfcAlignmentHorizontal horizontal, IfcAlignment2DVertical vertical) : this(horizontal) { Vertical = vertical; }
 	}
 	[Obsolete("DEPRECATED IFC4", false)]
 	[Serializable]

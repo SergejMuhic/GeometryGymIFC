@@ -295,6 +295,11 @@ namespace GeometryGym.Ifc
 
 		
 	}
+	public abstract partial class IfcLinearElement : IfcProduct
+	{
+		protected IfcLinearElement() : base() { }
+		protected IfcLinearElement(DatabaseIfc db) : base(db) { }
+	}
 	[Obsolete("DEPRECATED IFC4", false)]
 	[Serializable]
 	public partial class IfcLinearDimension : IfcDimensionCurveDirectedCallout // DEPRECATED IFC4

@@ -2064,7 +2064,7 @@ namespace GeometryGym.Ifc
 		private double mStartDirection;// : IfcPlaneAngleMeasure;
 		private double mSegmentLength;// : IfcPositiveLengthMeasure;
 		//INVERSE GG
-		internal IfcAlignment2DHorizontalSegment mToSegment = null;
+		internal IfcAlignmentHorizontalSegment mToSegment = null;
 
 		public IfcCartesianPoint StartPoint { get { return mStartPoint; } set { mStartPoint = value; } }
 		public double StartDirection { get { return mStartDirection; } set { mStartDirection = value; } }

@@ -195,14 +195,14 @@ namespace GeometryGym.Ifc
 				xml.SetAttribute("PredefinedType", mPredefinedType.ToString().ToLower());
 		}
 	}
-	public partial class IfcAlignment2DCant : IfcAxisLateralInclination
+	public partial class IfcAlignmentCant : IfcLinearElement
 	{
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<string, XmlElement> processed)
 		{
 			base.SetXML(xml, host, processed);
 			XmlElement element = xml.OwnerDocument.CreateElement("Segments", mDatabase.mXmlNamespace);
 			xml.AppendChild(element);
-			foreach (IfcAlignment2DCantSegment o in Segments)
+			foreach (IfcAlignmentCantSegment o in Segments)
 				element.AppendChild(o.GetXML(xml.OwnerDocument, "", this, processed));
 			xml.SetAttribute("RailHeadDistance", mRailHeadDistance.ToString());
 		}
@@ -219,7 +219,7 @@ namespace GeometryGym.Ifc
 				{
 					foreach (XmlNode cn in child.ChildNodes)
 					{
-						IfcAlignment2DCantSegment o = mDatabase.ParseXml<IfcAlignment2DCantSegment>(cn as XmlElement);
+						IfcAlignmentCantSegment o = mDatabase.ParseXml<IfcAlignmentCantSegment>(cn as XmlElement);
 						if (o != null)
 							Segments.Add(o);
 					}
@@ -227,7 +227,7 @@ namespace GeometryGym.Ifc
 			}
 		}
 	}
-	public abstract partial class IfcAlignment2DCantSegment : IfcAlignment2DSegment
+	public abstract partial class IfcAlignmentCantSegment : IfcAlignmentSegment
 	{
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<string, XmlElement> processed)
 		{
@@ -264,7 +264,7 @@ namespace GeometryGym.Ifc
 				double.TryParse(endCantRight, out mEndCantRight);
 		}
 	}
-	public partial class IfcAlignment2DCantSegTransition : IfcAlignment2DCantSegment
+	public partial class IfcAlignment2DCantSegTransition : IfcAlignmentCantSegment
 	{
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<string, XmlElement> processed)
 		{
@@ -330,7 +330,7 @@ namespace GeometryGym.Ifc
 				Enum.TryParse<IfcTransitionCurveType>(transitionCurveType.Value, out mTransitionCurveType);
 		}
 	}
-	public partial class IfcAlignment2DHorizontal : IfcGeometricRepresentationItem //IFC4.1
+	public partial class IfcAlignmentHorizontal : IfcGeometricRepresentationItem //IFC4.1
 	{
 		internal override void ParseXml(XmlElement xml)
 		{
@@ -344,7 +344,7 @@ namespace GeometryGym.Ifc
 				{
 					foreach (XmlNode cn in child.ChildNodes)
 					{
-						IfcAlignment2DHorizontalSegment s = mDatabase.ParseXml<IfcAlignment2DHorizontalSegment>(cn as XmlElement);
+						IfcAlignmentHorizontalSegment s = mDatabase.ParseXml<IfcAlignmentHorizontalSegment>(cn as XmlElement);
 						if (s != null)
 							Segments.Add(s);
 					}
@@ -359,11 +359,11 @@ namespace GeometryGym.Ifc
 				setAttribute(xml, "StartDistAlong", formatLength(mStartDistAlong));
 			XmlElement element = xml.OwnerDocument.CreateElement("Segments", mDatabase.mXmlNamespace);
 			xml.AppendChild(element);
-			foreach (IfcAlignment2DHorizontalSegment s in Segments)
+			foreach (IfcAlignmentHorizontalSegment s in Segments)
 				element.AppendChild(s.GetXML(xml.OwnerDocument, "", this, processed));
 		}
 	}
-	public partial class IfcAlignment2DHorizontalSegment : IfcAlignment2DSegment //IFC4.1
+	public partial class IfcAlignmentHorizontalSegment : IfcAlignmentSegment //IFC4.1
 	{
 		internal override void ParseXml(XmlElement xml)
 		{
@@ -381,7 +381,7 @@ namespace GeometryGym.Ifc
 			xml.AppendChild(CurveGeometry.GetXML(xml.OwnerDocument, "CurveGeometry", this, processed));
 		}
 	}
-	public abstract partial class IfcAlignment2DSegment : IfcGeometricRepresentationItem //IFC4.1 ABSTRACT SUPERTYPE OF(ONEOF(IfcAlignment2DHorizontalSegment, IfcAlignment2DVerticalSegment))
+	public abstract partial class IfcAlignmentSegment : IfcGeometricRepresentationItem //IFC4.1 ABSTRACT SUPERTYPE OF(ONEOF(IfcAlignment2DHorizontalSegment, IfcAlignment2DVerticalSegment))
 	{
 		internal override void ParseXml(XmlElement xml)
 		{
@@ -439,7 +439,7 @@ namespace GeometryGym.Ifc
 			setAttribute(xml, "IsConvex", IsConvex.ToString());
 		}
 	}
-	public abstract partial class IfcAlignment2DVerticalSegment : IfcAlignment2DSegment //IFC4.1
+	public abstract partial class IfcAlignment2DVerticalSegment : IfcAlignmentSegment //IFC4.1
 	{
 		internal override void ParseXml(XmlElement xml)
 		{
@@ -474,7 +474,7 @@ namespace GeometryGym.Ifc
 			{
 				string name = child.Name;
 				if (string.Compare(name, "Horizontal") == 0)
-					Horizontal = mDatabase.ParseXml<IfcAlignment2DHorizontal>(child as XmlElement);
+					Horizontal = mDatabase.ParseXml<IfcAlignmentHorizontal>(child as XmlElement);
 				else if (string.Compare(name, "Vertical") == 0)
 					Vertical = mDatabase.ParseXml<IfcAlignment2DVertical>(child as XmlElement);
 			}
