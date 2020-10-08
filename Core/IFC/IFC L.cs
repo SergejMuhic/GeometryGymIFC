@@ -299,6 +299,7 @@ namespace GeometryGym.Ifc
 	{
 		protected IfcLinearElement() : base() { }
 		protected IfcLinearElement(DatabaseIfc db) : base(db) { }
+		protected IfcLinearElement(DatabaseIfc db, IfcLinearElement linearElement, DuplicateOptions options) : base(db, linearElement, options) { }
 	}
 	[Obsolete("DEPRECATED IFC4", false)]
 	[Serializable]

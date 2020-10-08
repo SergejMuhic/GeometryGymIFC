@@ -326,7 +326,7 @@ namespace GeometryGym.Ifc
 			StartCantLeft = startCantLeft;
 			StartCantRight = startCantRight;
 		}
-	}
+	}/*
 	[Serializable]
 	public partial class IfcAlignment2DCantSegTransition : IfcAlignmentCantSegment
 	{
@@ -390,7 +390,7 @@ namespace GeometryGym.Ifc
 			IsEndRadiusCCW = isEndRadiusCCW;
 			TransitionCurveType = transitionCurveType;
 		}
-	}
+	}*/
 	[Serializable]
 	public partial class IfcAlignmentHorizontal : IfcGeometricRepresentationItem //IFC4.1
 	{
